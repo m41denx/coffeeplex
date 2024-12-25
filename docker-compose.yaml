@@ -1,0 +1,27 @@
+services:
+  db:
+    image: mariadb:11
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: coffeeplex
+      MYSQL_USER: coffeeplex
+      MYSQL_PASSWORD: kotikzevnul
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./migrations:/migrations
+
+  app:
+    build: .
+    ports:
+      - "8000:8080"
+
+    depends_on:
+      - db
+
+networks:
+  default:
+
+volumes:
+  db_data:
